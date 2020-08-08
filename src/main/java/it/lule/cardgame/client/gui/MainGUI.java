@@ -18,7 +18,7 @@ public class MainGUI extends javax.swing.JFrame {
      */
     public MainGUI() {
         initComponents();
-        MQTTClient.getInstance().connect();
+        MQTTClient.getInstance().connect();   
     }
 
     /**
@@ -90,7 +90,9 @@ public class MainGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.playerListPanel1.playerConnected(this.jTextField_nick.getText());
+//        this.playerListPanel1.playerConnected(this.jTextField_nick.getText());
+        this.jButton1.setEnabled(false);        
+        MQTTClient.getInstance().publish("UserConnected", this.jTextField_nick.getText() );
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

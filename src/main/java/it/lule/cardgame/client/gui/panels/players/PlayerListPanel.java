@@ -5,13 +5,15 @@
  */
 package it.lule.cardgame.client.gui.panels.players;
 
+import it.lule.cardgame.client.logic.ConnectionEvent;
+import it.lule.cardgame.client.logic.EventManager;
 import javax.swing.DefaultListModel;
 
 /**
  *
  * @author Luca
  */
-public class PlayerListPanel extends javax.swing.JPanel {
+public class PlayerListPanel extends javax.swing.JPanel implements ConnectionEvent{
 
     final DefaultListModel model = new DefaultListModel();
     /**
@@ -20,6 +22,7 @@ public class PlayerListPanel extends javax.swing.JPanel {
     public PlayerListPanel() {
         initComponents();
         this.jList1.setModel(model);
+        EventManager.getInstance().addConnectionEvents(this);
 
     }
     
@@ -58,4 +61,9 @@ public class PlayerListPanel extends javax.swing.JPanel {
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void userConnected(String nickName) {
+        playerConnected(nickName);
+    }
 }
