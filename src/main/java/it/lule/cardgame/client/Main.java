@@ -5,6 +5,8 @@
  */
 package it.lule.cardgame.client;
 
+import it.lule.cardgame.client.mqtt.MQTTClient;
+
 /**
  *
  * @author Luca
@@ -17,5 +19,7 @@ public class Main {
         System.out.println("[CardGame-Client]Initializing.. [OK]");
         //insert loading GUI
         System.out.println("[CardGame-Client] bye");
+        
+        MQTTClient.getInstance().connect();
     }
 }
