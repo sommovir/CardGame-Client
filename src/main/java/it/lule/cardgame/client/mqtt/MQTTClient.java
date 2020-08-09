@@ -22,7 +22,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  * @author Luca
  */
 public class MQTTClient implements MqttCallback {
-
+    public static final String LOGIN_TOPIC = "loginTopic";
     private static MQTTClient _instance = null;
     private final int qos = 2;
     private MqttClient sampleClient = null;
