@@ -6,7 +6,9 @@
 package it.lule.cardgame.client;
 
 import it.lule.cardgame.client.gui.MainGUI;
+import it.lule.cardgame.client.gui.panels.login.LoginDialog;
 import it.lule.cardgame.client.mqtt.MQTTClient;
+import javax.swing.JFrame;
 
 /**
  *
@@ -47,8 +49,12 @@ public class Main {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainGUI().setVisible(true);
+                new LoginDialog(new JFrame(), true).setVisible(true);
+                
+                System.out.println("dasdasdasdasdasdasdasdasdas");
+//                new MainGUI().setVisible(true);
             }
+        
         });
         
         
