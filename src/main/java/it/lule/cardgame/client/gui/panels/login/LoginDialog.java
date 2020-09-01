@@ -6,6 +6,10 @@
 package it.lule.cardgame.client.gui.panels.login;
 
 import it.lule.cardgame.client.gui.MainGUI;
+import it.lule.cardgame.client.logic.LoginEnum;
+import it.lule.cardgame.client.mqtt.MQTTClient;
+import java.awt.Dialog;
+import javax.swing.JFrame;
 
 /**
  *
@@ -140,10 +144,13 @@ public class LoginDialog extends javax.swing.JDialog {
             }
         
         });        // TODO add your handling code here:
+        
+        String message = jTextFieldNickname.getText() + jPasswordField1.getPassword();
+        MQTTClient.getInstance().publish(LoginEnum.USER_CONNECTED.getLoginEnum(), message);
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
-        // TODO add your handling code here:
+        new RegisterDialog(new JFrame(), true).setVisible(true);                  
     }//GEN-LAST:event_jButtonRegisterActionPerformed
 
     /**
@@ -179,12 +186,15 @@ public class LoginDialog extends javax.swing.JDialog {
             public void run() {
                 LoginDialog dialog = new LoginDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
+                    // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
                 });
                 dialog.setVisible(true);
+  
             }
         });
     }
