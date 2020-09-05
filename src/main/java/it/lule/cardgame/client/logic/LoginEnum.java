@@ -10,7 +10,8 @@ package it.lule.cardgame.client.logic;
  * @author lele
  */
 public enum LoginEnum {
-    USER_CONNECTED("UserConnected");
+    USER_CONNECTED("UserConnected"),
+    REGISTRATION("Registration");
     
     private String user;
 

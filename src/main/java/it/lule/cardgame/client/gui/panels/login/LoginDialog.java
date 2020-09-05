@@ -6,9 +6,8 @@
 package it.lule.cardgame.client.gui.panels.login;
 
 import it.lule.cardgame.client.gui.MainGUI;
-import it.lule.cardgame.client.logic.LoginEnum;
-import it.lule.cardgame.client.mqtt.MQTTClient;
-import java.awt.Dialog;
+import it.lule.cardgame.client.logic.ManagementPassword;
+import it.lule.cardgame.client.logic.TalkTtoTheServer;
 import javax.swing.JFrame;
 
 /**
@@ -16,16 +15,18 @@ import javax.swing.JFrame;
  * @author lele
  */
 public class LoginDialog extends javax.swing.JDialog {
-
+    private TalkTtoTheServer talkTtoTheServer = new TalkTtoTheServer();
+    private ManagementPassword managementPassword = new ManagementPassword();
+    
     /**
      * Creates new form NewJDialog
      */
     public LoginDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        System.out.println("zzzzzzzzzzzzzzzzz");
         this.setAlwaysOnTop(true);
         this.setLocationRelativeTo(null);
+        jButtonLogin.setEnabled(false);
     }
 
     /**
@@ -61,9 +62,19 @@ public class LoginDialog extends javax.swing.JDialog {
 
         jLabel2.setText("Nickname:");
 
+        jTextFieldNickname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldNicknameKeyReleased(evt);
+            }
+        });
+
         jLabel3.setText("Password");
 
-        jPasswordField1.setText("jPasswordField1");
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyReleased(evt);
+            }
+        });
 
         jButtonRegister.setText("Register");
         jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
@@ -86,17 +97,14 @@ public class LoginDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldNickname))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(jButtonLogin)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonRegister)))
-                        .addGap(0, 6, Short.MAX_VALUE)))
+                        .addGap(35, 35, 35)
+                        .addComponent(jButtonLogin)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonRegister))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,6 +143,8 @@ public class LoginDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
+        checkPassword();
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -143,15 +153,36 @@ public class LoginDialog extends javax.swing.JDialog {
                 new MainGUI().setVisible(true);
             }
         
-        });        // TODO add your handling code here:
-        
-        String message = jTextFieldNickname.getText() + jPasswordField1.getPassword();
-        MQTTClient.getInstance().publish(LoginEnum.USER_CONNECTED.getLoginEnum(), message);
+        });        // TODO add your handling code here:                
     }//GEN-LAST:event_jButtonLoginActionPerformed
+    
+    private boolean checkPassword(){
+        if (managementPassword.checkPasswordlogin(jTextFieldNickname.getText(), 
+                jPasswordField1.getPassword())){
+            return true;
+        }
 
+        return false;
+    }    
+    
+    private void enableButton(){
+       if (checkPassword()){
+            jButtonLogin.setEnabled(true);           
+       }else{
+            jButtonLogin.setEnabled(false); 
+       }                   
+    }
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
         new RegisterDialog(new JFrame(), true).setVisible(true);                  
     }//GEN-LAST:event_jButtonRegisterActionPerformed
+
+    private void jTextFieldNicknameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNicknameKeyReleased
+        enableButton();
+    }//GEN-LAST:event_jTextFieldNicknameKeyReleased
+
+    private void jPasswordField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyReleased
+        enableButton();
+    }//GEN-LAST:event_jPasswordField1KeyReleased
 
     /**
      * @param args the command line arguments

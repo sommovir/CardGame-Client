@@ -5,12 +5,20 @@
  */
 package it.lule.cardgame.client.gui.panels.login;
 
+import it.lule.cardgame.client.logic.DBErrorCode;
+import it.lule.cardgame.client.logic.ManagementPassword;
+import it.lule.cardgame.client.logic.TalkTtoTheServer;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author lele
  */
 public class RegisterDialog extends javax.swing.JDialog {
-
+    private TalkTtoTheServer talkTtoTheServer = new TalkTtoTheServer();
+    private ManagementPassword managementPassword = new ManagementPassword();
+    
     /**
      * Creates new form Register
      */
@@ -18,6 +26,7 @@ public class RegisterDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         jTextField1.selectAll();
+        jButtonRegister.setEnabled(false);
     }
 
     /**
@@ -49,16 +58,28 @@ public class RegisterDialog extends javax.swing.JDialog {
             }
         });
 
-        jTextField1.setText("UserName");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
-        jPasswordField1.setText("jPasswordField1");
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyReleased(evt);
+            }
+        });
 
-        jPasswordField2.setText("jPasswordField1");
+        jPasswordField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPasswordField2KeyReleased(evt);
+            }
+        });
 
         jLabel1.setText("User");
 
@@ -122,9 +143,44 @@ public class RegisterDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
-       this.dispose();
+        if (!checkPassword()){
+            JOptionPane.showMessageDialog(rootPane, DBErrorCode.PASSWORD_DO_NOT_MATCH.getCode());
+            return;
+        }            
+        
+//        talkTtoTheServer.createRegistration(jTextField1.getText(), jPasswordField1.getPassword().toString());
+//        this.dispose();
     }//GEN-LAST:event_jButtonRegisterActionPerformed
 
+    private void jPasswordField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyReleased
+        enableButton();
+    }//GEN-LAST:event_jPasswordField1KeyReleased
+
+    private void jPasswordField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField2KeyReleased
+        enableButton();        
+    }//GEN-LAST:event_jPasswordField2KeyReleased
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        enableButton();  
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private boolean checkPassword(){
+        if (managementPassword.checkPasswordRegistration(jTextField1.getText(), 
+            jPasswordField1.getPassword(), jPasswordField2.getPassword())){
+            return true;
+        }
+
+        return false;
+    }
+    
+    private void enableButton(){
+       if (checkPassword()){
+            jButtonRegister.setEnabled(true);           
+       }else{
+            jButtonRegister.setEnabled(false); 
+       }                   
+    }
+    
     /**
      * @param args the command line arguments
      */
