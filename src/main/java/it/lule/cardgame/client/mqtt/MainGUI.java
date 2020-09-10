@@ -96,7 +96,14 @@ public class MainGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 //        this.playerListPanel1.playerConnected(this.jTextField_nick.getText());
         this.jButton1.setEnabled(false);        
+
+        //-------------------------------------------
+        MQTTClient.getInstance().setMyNickName( jTextField_nick.getText()  );
         MQTTClient.getInstance().publish("UserConnected", this.jTextField_nick.getText() );
+        //-------------------------------------------
+        
+        
+        System.out.println("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField_nickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_nickActionPerformed

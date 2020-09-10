@@ -26,7 +26,8 @@ public class MQTTClient implements MqttCallback {
     private static MQTTClient _instance = null;
     private final int qos = 2;
     private MqttClient sampleClient = null;
-
+    private String myNickName="unknown";
+    
     String content = "Visit www.hascode.com! :D";
 
     String broker = "tcp://0.0.0.0:1883";
@@ -95,6 +96,19 @@ public class MQTTClient implements MqttCallback {
         }
     }
 
+    public String getMyNickName() {
+        return myNickName;
+    }
+
+    public void setMyNickName(String myNickName) {
+        this.myNickName = myNickName;
+        try {
+            sampleClient.subscribe(myNickName);
+        } catch (MqttException ex) {
+            Logger.getLogger(MQTTClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }   
+    
     @Override
     public void connectionLost(Throwable thrwbl) {
         
@@ -106,6 +120,10 @@ public class MQTTClient implements MqttCallback {
         System.out.println("MESSAGE: "+new String(mm.getPayload()));
         if (topic.equals("UserConnected")) {
             EventManager.getInstance().userConnected(new String(mm.getPayload()));
+        }
+        
+        if (topic.equals(myNickName)){
+            System.out.println("MESSAGGIO PER ME : "+new String(mm.getPayload()));
         }
     }
 
