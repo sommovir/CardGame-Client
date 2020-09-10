@@ -5,7 +5,7 @@
  */
 package it.lule.cardgame.client;
 
-import it.lule.cardgame.client.gui.MainGUI;
+import it.lule.cardgame.client.mqtt.MainGUI;
 import it.lule.cardgame.client.gui.panels.login.LoginDialog;
 import it.lule.cardgame.client.mqtt.MQTTClient;
 import javax.swing.JFrame;

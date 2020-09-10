@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.lule.cardgame.client.gui;
-
-import it.lule.cardgame.client.mqtt.MQTTClient;
+package it.lule.cardgame.client.mqtt;
 
 /**
  *
@@ -39,6 +37,12 @@ public class MainGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Nickname");
+
+        jTextField_nick.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_nickActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("connect");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +98,10 @@ public class MainGUI extends javax.swing.JFrame {
         this.jButton1.setEnabled(false);        
         MQTTClient.getInstance().publish("UserConnected", this.jTextField_nick.getText() );
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField_nickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_nickActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_nickActionPerformed
 
     /**
      * @param args the command line arguments

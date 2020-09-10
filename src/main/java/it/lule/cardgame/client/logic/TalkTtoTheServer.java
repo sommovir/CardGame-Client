@@ -6,7 +6,6 @@
 package it.lule.cardgame.client.logic;
 
 import it.lule.cardgame.client.mqtt.MQTTClient;
-import java.lang.reflect.Array;
 
 /**
  *
