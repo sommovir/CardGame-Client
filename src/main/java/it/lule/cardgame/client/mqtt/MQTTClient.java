@@ -6,6 +6,7 @@
 package it.lule.cardgame.client.mqtt;
 
 import it.lule.cardgame.client.logic.EventManager;
+import it.lule.cardgame.client.logic.Topics;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,6 +74,28 @@ public class MQTTClient implements MqttCallback {
 //            System.out.println("paho-client disconnected");
         } catch (MqttException me) {
             me.printStackTrace();
+        }
+    }
+    
+    public void tryLogin(String username, String encryptedPassword){
+        try {
+            String topic = Topics.ATTEMPT_LOGIN.getTopic() + "/" +clientId;
+            String message = username + ","+encryptedPassword;
+            MqttMessage mx = new MqttMessage(message.getBytes());
+            mx.setQos(qos);
+            if (sampleClient.isConnected()) {
+                System.out.println("CONNESSOOOO");
+            } else {
+                sampleClient = new MqttClient(broker, clientId, new MemoryPersistence());
+                MqttConnectOptions connOpts = new MqttConnectOptions();
+                connOpts.setCleanSession(true);
+                System.out.println("paho-client connecting to broker: " + broker);
+                sampleClient.connect(connOpts);
+                System.out.println("NOT CONNESSO");
+            }
+            sampleClient.publish(topic, mx);
+        } catch (MqttException ex) {
+            Logger.getLogger(MQTTClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
