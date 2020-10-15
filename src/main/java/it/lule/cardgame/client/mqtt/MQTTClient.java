@@ -33,7 +33,7 @@ public class MQTTClient implements MqttCallback {
 
     String broker = "tcp://0.0.0.0:1883";
 
-    String clientId = "paho-java-client"+new Date().getTime();
+    static final String clientId = "paho-java-client"+new Date().getTime();
 
     public static MQTTClient getInstance() {
         if (_instance == null) {
