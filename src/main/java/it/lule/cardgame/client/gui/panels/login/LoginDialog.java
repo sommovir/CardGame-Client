@@ -5,6 +5,8 @@
  */
 package it.lule.cardgame.client.gui.panels.login;
 
+import it.lule.cardgame.client.logic.ConnectionEvent;
+import it.lule.cardgame.client.logic.EventManager;
 import it.lule.cardgame.client.mqtt.MainGUI;
 import it.lule.cardgame.client.logic.ManagementPassword;
 import it.lule.cardgame.client.logic.TalkTtoTheServer;
@@ -15,7 +17,7 @@ import javax.swing.JFrame;
  *
  * @author lele
  */
-public class LoginDialog extends javax.swing.JDialog {
+public class LoginDialog extends javax.swing.JDialog implements ConnectionEvent{
 
     private TalkTtoTheServer talkTtoTheServer = new TalkTtoTheServer();
     private ManagementPassword managementPassword = new ManagementPassword();
@@ -29,6 +31,7 @@ public class LoginDialog extends javax.swing.JDialog {
         this.setAlwaysOnTop(true);
         this.setLocationRelativeTo(null);
         this.setTitle("Card Game Client");
+        EventManager.getInstance().addConnectionEvents(this);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
 
             // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -270,4 +273,16 @@ public class LoginDialog extends javax.swing.JDialog {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextFieldNickname;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void userConnected(String nickName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void ackReceided(int error) {
+        if (error == 1){
+            this.jLabel_ErrorMessage.setText("Password errata !!!!!!!");
+        }
+    }
 }

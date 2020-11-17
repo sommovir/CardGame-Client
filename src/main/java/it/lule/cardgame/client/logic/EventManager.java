@@ -37,4 +37,9 @@ public class EventManager {
         }
     }
     
+    public void ackReceided(int error){
+        for (ConnectionEvent connectionEvent : connectionEvents) {
+            connectionEvent.ackReceided(error);
+        }
+    }
 }
