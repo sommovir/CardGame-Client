@@ -40,7 +40,6 @@ public class Client_MQTT implements MqttCallback {
         return instance;
     }
 
-    /* inizializza il client */
     private Client_MQTT() {
         super();
         initClient();
@@ -49,7 +48,10 @@ public class Client_MQTT implements MqttCallback {
     /* inizializza il client */
     private void initClient() {
         try {
-            client = new MqttClient(broker, clientID, new MemoryPersistence());
+            if (client == null || client.isConnected()) {
+                client = new MqttClient(broker, clientID, new MemoryPersistence());                
+            }
+
         } catch (MqttException ex) {
             Logger.getLogger(Client_MQTT.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,22 +85,21 @@ public class Client_MQTT implements MqttCallback {
     public void tryLogin(String username, String encryptedPassword) throws MqttException {
         String topic = Topics.ATTEMPT_LOGIN.getTopic() + "/" + clientID;
         String message = username + "," + encryptedPassword;
-        
+
         topicSubscribe(Topics.ACK_LOGIN.getTopic());
         publish(topic, message);
     }
 
     /**
      * Check Connection
-     * @throws MqttException 
+     *
+     * @throws MqttException
      */
-    private void checkConnection() throws MqttException{
-        if (client == null || client.isConnected()) {
-            initClient();
-            initializeConnection();
-        }        
+    private void checkConnection() throws MqttException {
+        initClient();
+//        initializeConnection();
     }
-    
+
     /**
      * Public message
      *
@@ -107,7 +108,7 @@ public class Client_MQTT implements MqttCallback {
      */
     public void publish(String topic, String message) throws MqttException {
         checkConnection();
-        
+
         MqttMessage mqttMessage = new MqttMessage(message.getBytes());
         mqttMessage.setQos(qos);
 
