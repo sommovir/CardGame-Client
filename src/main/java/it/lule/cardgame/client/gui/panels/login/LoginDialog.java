@@ -283,6 +283,6 @@ public class LoginDialog extends javax.swing.JDialog implements ConnectionEvent{
     public void ackReceived(int error) {
         if(error == 1){
             this.jLabel_ErrorMessage.setText("Password errata!");
-        }
     }
+}
 }

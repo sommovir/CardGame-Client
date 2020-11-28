@@ -38,10 +38,9 @@ public class EventManager {
         }
     }
 
-    public void ackReceived(int error) {
+    public void ackReceived(int error){
         for (ConnectionEvent connectionEvent : connectionEvents) {
             connectionEvent.ackReceived(error);
         }
     }
-
 }

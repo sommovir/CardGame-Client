@@ -10,6 +10,7 @@ package it.lule.cardgame.client.logic;
  * @author lele
  */
 public interface ConnectionEvent {
+
     public void userConnected(String nickName);
     
     public void ackReceived(int error);

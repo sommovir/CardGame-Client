@@ -69,6 +69,6 @@ public class PlayerListPanel extends javax.swing.JPanel implements ConnectionEve
 
     @Override
     public void ackReceived(int error) {
-       
+
     }
 }
