@@ -13,15 +13,16 @@ import java.util.List;
  * @author lele
  */
 public class EventManager {
+
     private static EventManager instance = null;
-    private List < ConnectionEvent > connectionEvents = new LinkedList<>();
-    
+    private List< ConnectionEvent> connectionEvents = new LinkedList<>();
+
     private EventManager() {
 
     }
-    
-    public static EventManager getInstance(){
-        if ( instance == null  ){
+
+    public static EventManager getInstance() {
+        if (instance == null) {
             instance = new EventManager();
         }
         return instance;
@@ -30,11 +31,17 @@ public class EventManager {
     public void addConnectionEvents(ConnectionEvent connectionEvent) {
         this.connectionEvents.add(connectionEvent);
     }
-    
-    public void userConnected(String nickName){
+
+    public void userConnected(String nickName) {
         for (ConnectionEvent connectionEvent : connectionEvents) {
             connectionEvent.userConnected(nickName);
         }
     }
-    
+
+    public void ackReceived(int error) {
+        for (ConnectionEvent connectionEvent : connectionEvents) {
+            connectionEvent.ackReceived(error);
+        }
+    }
+
 }

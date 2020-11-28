@@ -66,4 +66,9 @@ public class PlayerListPanel extends javax.swing.JPanel implements ConnectionEve
     public void userConnected(String nickName) {
         playerConnected(nickName);
     }
+
+    @Override
+    public void ackReceived(int error) {
+       
+    }
 }

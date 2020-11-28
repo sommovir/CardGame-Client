@@ -12,6 +12,7 @@ package it.lule.cardgame.client.logic;
 public enum Topics {
 
     ATTEMPT_LOGIN("attempt_login"),
+    ACK_LOGIN("ack_login"),
     ATTEMPT_LOGIN_RESPONSE("attempt_login_response");
     
     private Topics(String topic) {

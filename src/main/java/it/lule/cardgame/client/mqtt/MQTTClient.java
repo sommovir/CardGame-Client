@@ -90,9 +90,11 @@ public class MQTTClient implements MqttCallback {
                 MqttConnectOptions connOpts = new MqttConnectOptions();
                 connOpts.setCleanSession(true);
                 System.out.println("paho-client connecting to broker: " + broker);
+                
                 sampleClient.connect(connOpts);
                 System.out.println("NOT CONNESSO");
             }
+            sampleClient.subscribe(Topics.ACK_LOGIN.getTopic()+"/"+clientId);
             sampleClient.publish(topic, mx);
         } catch (MqttException ex) {
             Logger.getLogger(MQTTClient.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,6 +143,12 @@ public class MQTTClient implements MqttCallback {
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
         System.out.println("TOPIC: "+topic);
         System.out.println("MESSAGE: "+new String(mm.getPayload()));
+        if(topic.equals(Topics.ACK_LOGIN.getTopic()+"/"+clientId)){
+            String message = new String(mm.getPayload());
+            if(message.equals("ERROR:1")){
+                EventManager.getInstance().ackReceived(1);
+            }
+        }
         if (topic.equals("UserConnected")) {
             EventManager.getInstance().userConnected(new String(mm.getPayload()));
         }
@@ -148,6 +156,7 @@ public class MQTTClient implements MqttCallback {
         if (topic.equals(myNickName)){
             System.out.println("MESSAGGIO PER ME : "+new String(mm.getPayload()));
         }
+        
     }
 
     @Override
