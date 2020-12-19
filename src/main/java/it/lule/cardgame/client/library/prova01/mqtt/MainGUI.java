@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.lule.cardgame.client.mqtt;
+package it.lule.cardgame.client.library.prova01.mqtt;
 
 /**
  *

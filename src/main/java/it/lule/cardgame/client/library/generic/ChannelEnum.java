@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.lule.cardgame.client.logic;
+package it.lule.cardgame.client.library.generic;
 
 /**
  *
  * @author lele
  */
-public enum LoginEnum {
-    USER_CONNECTED("UserConnected"),
-    REGISTRATION("Registration");
+public enum ChannelEnum {
+    ALL_CONNECTED("AllConnected"),
+    FIRST_CONNECTION("firstConnection");
     
     private String user;
 
-    private LoginEnum(String user) {
+    private ChannelEnum(String user) {
         this.user = user;
     }
     
-    public String getLoginEnum(){
+    public String getChannelEnum(){
         return user;
     }
 }

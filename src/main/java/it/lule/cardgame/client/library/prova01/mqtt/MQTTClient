@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.lule.cardgame.client.mqtt;
+package it.lule.cardgame.client.library.prova01.mqtt;
 
-import it.lule.cardgame.client.logic.EventManager;
-import it.lule.cardgame.client.logic.Topics;
+import it.lule.cardgame.client.library.generic.EventManager;
+import it.lule.cardgame.client.library.generic.Topics;
+
+
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -146,7 +148,7 @@ public class MQTTClient implements MqttCallback {
         if(topic.equals(Topics.ACK_LOGIN.getTopic()+"/"+clientId)){
             String message = new String(mm.getPayload());
             if(message.equals("ERROR:1")){
-                EventManager.getInstance().ackReceived(1);
+                EventManager.getInstance().ackReceided(1);
             }
         }
         if (topic.equals("UserConnected")) {
@@ -165,3 +167,4 @@ public class MQTTClient implements MqttCallback {
     }
 
 }
+

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.lule.cardgame.client.prova;
+package it.lule.cardgame.client.library;
 
-import it.lule.cardgame.client.logic.EventManager;
-import it.lule.cardgame.client.logic.Topics;
+import it.lule.cardgame.client.library.generic.EventManager;
+import it.lule.cardgame.client.library.generic.Topics;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +16,6 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.internal.wire.MqttConnect;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 /**
@@ -143,7 +142,7 @@ public class Client_MQTT implements MqttCallback {
 
             String message = new String(mm.getPayload());
             if (message.equals("ERROR:1")) {
-                EventManager.getInstance().ackReceived(1);
+                EventManager.getInstance().ackReceided(1);
                 System.out.println("ERROR:1");
             }
         }

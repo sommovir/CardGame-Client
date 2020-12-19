@@ -5,8 +5,8 @@
  */
 package it.lule.cardgame.client.gui.panels.players;
 
-import it.lule.cardgame.client.logic.ConnectionEvent;
-import it.lule.cardgame.client.logic.EventManager;
+import it.lule.cardgame.client.library.generic.ConnectionEvent;
+import it.lule.cardgame.client.library.generic.EventManager;
 import javax.swing.DefaultListModel;
 
 /**
@@ -68,7 +68,7 @@ public class PlayerListPanel extends javax.swing.JPanel implements ConnectionEve
     }
 
     @Override
-    public void ackReceived(int error) {
-
+    public void ackReceided(int error) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -5,19 +5,18 @@
  */
 package it.lule.cardgame.client.gui.panels.login;
 
-import it.lule.cardgame.client.logic.ConnectionEvent;
-import it.lule.cardgame.client.logic.EventManager;
-import it.lule.cardgame.client.mqtt.MainGUI;
-import it.lule.cardgame.client.logic.ManagementPassword;
-import it.lule.cardgame.client.logic.TalkTtoTheServer;
-import it.lule.cardgame.client.mqtt.MQTTClient;
+import it.lule.cardgame.client.library.call_to.TalkTtoTheServer;
+import it.lule.cardgame.client.library.generic.ConnectionEvent;
+import it.lule.cardgame.client.library.generic.EventManager;
+import it.lule.cardgame.client.library.generic.ManagementPassword;
+import it.lule.cardgame.client.library.mqtt.MQTTClient;
 import javax.swing.JFrame;
 
 /**
  *
  * @author lele
  */
-public class LoginDialog extends javax.swing.JDialog implements ConnectionEvent{
+public class LoginDialog extends javax.swing.JDialog implements ConnectionEvent {
 
     private TalkTtoTheServer talkTtoTheServer = new TalkTtoTheServer();
     private ManagementPassword managementPassword = new ManagementPassword();
@@ -165,16 +164,16 @@ public class LoginDialog extends javax.swing.JDialog implements ConnectionEvent{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public String encrypt(char [] password){
+    public String encrypt(char[] password) {
         return new String(password);
     }
-    
-    
+
+
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
 //        checkPassword();
         String username = this.jTextFieldNickname.getText();
         String encryptedPassword = encrypt(this.jPasswordField1.getPassword());
-        MQTTClient.getInstance().tryLogin(username, encryptedPassword);
+//        MQTTClient.getInstance().tryLogin(username, encryptedPassword);
         /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
@@ -187,20 +186,12 @@ public class LoginDialog extends javax.swing.JDialog implements ConnectionEvent{
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     private boolean checkPassword() {
-        if (managementPassword.checkPasswordlogin(jTextFieldNickname.getText(),
-                jPasswordField1.getPassword())) {
-            return true;
-        }
 
         return false;
     }
 
     private void checkButtonLogin() {
-        if (!this.jTextFieldNickname.getText().isEmpty() && !this.jPasswordField1.getText().isEmpty()) {
-            jButtonLogin.setEnabled(true);
-        } else {
-            jButtonLogin.setEnabled(false);
-        }
+
     }
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
         new RegisterDialog(new JFrame(), true).setVisible(true);
@@ -276,13 +267,13 @@ public class LoginDialog extends javax.swing.JDialog implements ConnectionEvent{
 
     @Override
     public void userConnected(String nickName) {
-        
+
     }
 
     @Override
-    public void ackReceived(int error) {
-        if(error == 1){
+    public void ackReceided(int error) {
+        if (error == 1) {
             this.jLabel_ErrorMessage.setText("Password errata!");
+        }
     }
-}
 }

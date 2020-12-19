@@ -5,9 +5,10 @@
  */
 package it.lule.cardgame.client;
 
-import it.lule.cardgame.client.mqtt.MainGUI;
 import it.lule.cardgame.client.gui.panels.login.LoginDialog;
-import it.lule.cardgame.client.mqtt.MQTTClient;
+import it.lule.cardgame.client.library.prova01.mqtt.MQTTClient;
+import it.lule.cardgame.client.library.prova01.mqtt.MainGUI;
+
 import javax.swing.JFrame;
 
 /**
@@ -53,7 +54,7 @@ public class Main {
             public void run() {
                 new LoginDialog(new JFrame(), true).setVisible(true);
                 
-                System.out.println("dasdasdasdasdasdasdasdasdas");
+
 //                new MainGUI().setVisible(true);
             }
         

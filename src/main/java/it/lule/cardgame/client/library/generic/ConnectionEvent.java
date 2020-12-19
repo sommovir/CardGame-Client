@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.lule.cardgame.client.logic;
+package it.lule.cardgame.client.library.generic;
 
 /**
  *
@@ -12,7 +12,6 @@ package it.lule.cardgame.client.logic;
 public interface ConnectionEvent {
 
     public void userConnected(String nickName);
-    
-    public void ackReceived(int error);
-    
+
+    public void ackReceided(int error);
 }

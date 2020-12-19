@@ -5,10 +5,10 @@
  */
 package it.lule.cardgame.client.gui.panels.login;
 
-import it.lule.cardgame.client.logic.DBErrorCode;
-import it.lule.cardgame.client.logic.ManagementPassword;
-import it.lule.cardgame.client.logic.TalkTtoTheServer;
-import java.util.Arrays;
+
+import it.lule.cardgame.client.library.call_to.TalkTtoTheServer;
+import it.lule.cardgame.client.library.errorcode.ErrorCode;
+import it.lule.cardgame.client.library.generic.ManagementPassword;
 import javax.swing.JOptionPane;
 
 /**
@@ -144,7 +144,7 @@ public class RegisterDialog extends javax.swing.JDialog {
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
         if (!checkPassword()){
-            JOptionPane.showMessageDialog(rootPane, DBErrorCode.PASSWORD_DO_NOT_MATCH.getCode());
+            JOptionPane.showMessageDialog(rootPane, ErrorCode.PASSWORD_DO_NOT_MATCH.getCode());
             return;
         }            
         
@@ -165,20 +165,12 @@ public class RegisterDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private boolean checkPassword(){
-        if (managementPassword.checkPasswordRegistration(jTextField1.getText(), 
-            jPasswordField1.getPassword(), jPasswordField2.getPassword())){
-            return true;
-        }
 
         return false;
     }
     
     private void enableButton(){
-       if (checkPassword()){
-            jButtonRegister.setEnabled(true);           
-       }else{
-            jButtonRegister.setEnabled(false); 
-       }                   
+                   
     }
     
     /**

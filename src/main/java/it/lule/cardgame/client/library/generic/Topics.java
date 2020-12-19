@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.lule.cardgame.client.logic;
+package it.lule.cardgame.client.library.generic;
 
 /**
  *
@@ -12,8 +12,8 @@ package it.lule.cardgame.client.logic;
 public enum Topics {
 
     ATTEMPT_LOGIN("attempt_login"),
-    ACK_LOGIN("ack_login"),
-    ATTEMPT_LOGIN_RESPONSE("attempt_login_response");
+    ATTEMPT_LOGIN_RESPONSE("attempt_login_response"),
+    ACK_LOGIN("ack_login");
     
     private Topics(String topic) {
         this.topic = topic;
