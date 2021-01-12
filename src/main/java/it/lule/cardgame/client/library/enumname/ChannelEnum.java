@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.lule.cardgame.client.library.generic;
+package it.lule.cardgame.client.library.enumname;
 
 /**
  *
@@ -11,7 +11,8 @@ package it.lule.cardgame.client.library.generic;
  */
 public enum ChannelEnum {
     ALL_CONNECTED("AllConnected"),
-    FIRST_CONNECTION("firstConnection");
+    FIRST_CONNECTION("FirstConnection"),
+    SUBSCRIBE_MY_CHANNEL("SubscribeMyChannel");
     
     private String user;
 

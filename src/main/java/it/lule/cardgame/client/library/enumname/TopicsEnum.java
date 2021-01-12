@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.lule.cardgame.client.library.generic;
+package it.lule.cardgame.client.library.enumname;
 
 /**
  *
  * @author Luca
  */
-public enum Topics {
+public enum TopicsEnum {
 
     ATTEMPT_LOGIN("attempt_login"),
     ATTEMPT_LOGIN_RESPONSE("attempt_login_response"),
     ACK_LOGIN("ack_login");
     
-    private Topics(String topic) {
+    private TopicsEnum(String topic) {
         this.topic = topic;
     }
 

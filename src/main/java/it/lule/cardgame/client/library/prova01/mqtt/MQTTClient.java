@@ -5,8 +5,8 @@
  */
 package it.lule.cardgame.client.library.prova01.mqtt;
 
-import it.lule.cardgame.client.library.generic.EventManager;
-import it.lule.cardgame.client.library.generic.Topics;
+import it.lule.cardgame.client.library.event.EventManager;
+import it.lule.cardgame.client.library.enumname.TopicsEnum;
 
 
 import java.util.Date;
@@ -81,7 +81,7 @@ public class MQTTClient implements MqttCallback {
     
     public void tryLogin(String username, String encryptedPassword){
         try {
-            String topic = Topics.ATTEMPT_LOGIN.getTopic() + "/" +clientId;
+            String topic = TopicsEnum.ATTEMPT_LOGIN.getTopic() + "/" +clientId;
             String message = username + ","+encryptedPassword;
             MqttMessage mx = new MqttMessage(message.getBytes());
             mx.setQos(qos);
@@ -96,7 +96,7 @@ public class MQTTClient implements MqttCallback {
                 sampleClient.connect(connOpts);
                 System.out.println("NOT CONNESSO");
             }
-            sampleClient.subscribe(Topics.ACK_LOGIN.getTopic()+"/"+clientId);
+            sampleClient.subscribe(TopicsEnum.ACK_LOGIN.getTopic()+"/"+clientId);
             sampleClient.publish(topic, mx);
         } catch (MqttException ex) {
             Logger.getLogger(MQTTClient.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,7 +145,7 @@ public class MQTTClient implements MqttCallback {
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
         System.out.println("TOPIC: "+topic);
         System.out.println("MESSAGE: "+new String(mm.getPayload()));
-        if(topic.equals(Topics.ACK_LOGIN.getTopic()+"/"+clientId)){
+        if(topic.equals(TopicsEnum.ACK_LOGIN.getTopic()+"/"+clientId)){
             String message = new String(mm.getPayload());
             if(message.equals("ERROR:1")){
                 EventManager.getInstance().ackReceided(1);

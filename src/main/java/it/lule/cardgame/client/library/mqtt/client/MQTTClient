@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -32,34 +33,49 @@ public class MQTTClient implements MqttCallback {
 
     String broker = "tcp://0.0.0.0:1883";
 
-    public static MQTTClient getInstance() {
+    public static MQTTClient getInstance() throws MqttException {
         if (instance == null) {
             instance = new MQTTClient();
         }
         return instance;
     }
 
-    public MQTTClient() {
+    public MQTTClient() throws MqttException {
         super();
-        initClient();
+        initializeConnection();
     }
 
-    /* inizializza il client */
-    private void initClient() {
-        try {
-            if (client == null || !client.isConnected()) {
-                client = new MqttClient(broker, clientID, new MemoryPersistence());
-            }
+    /**
+     * Get Subscribe My Channel
+     * @return 
+     */
+    public String getSubscribeMyChannel() {
+        subscribeMyChannel = user + clientID;
+        return subscribeMyChannel;
+    }      
 
-        } catch (MqttException ex) {
-            Logger.getLogger(MQTTClient.class.getName()).log(Level.SEVERE, null, ex);
+    public void TalkTtoTheServer() {
+
+    }
+
+    @Override
+    public void messageArrived(String topic, MqttMessage mm) throws Exception {
+        System.out.println("TOPIC: " + topic);
+        System.out.println("MESSAGE: " + new String(mm.getPayload()));
+
+    }
+    
+    /* inizializza il client */
+    private void initClient() throws MqttException {
+        if (client == null || !client.isConnected()) {
+            client = new MqttClient(broker, clientID, new MemoryPersistence());
         }
     }
 
     /**
-     * Connect User 
-     * @throws MqttException 
-     * @deprecated 
+     * Connect User
+     * @throws MqttException
+     * @deprecated
      */
     public void connect() throws MqttException {
         initializeConnection();
@@ -67,8 +83,9 @@ public class MQTTClient implements MqttCallback {
 
     /**
      * Connect User
+     *
      * @param user
-     * @throws MqttException 
+     * @throws MqttException
      */
     public void connect(String user) throws MqttException {
         initializeConnection();
@@ -77,7 +94,8 @@ public class MQTTClient implements MqttCallback {
 
     /**
      * Initialize Connection
-     * @throws MqttException 
+     *
+     * @throws MqttException
      */
     private void initializeConnection() throws MqttException {
         initClient();
@@ -87,14 +105,14 @@ public class MQTTClient implements MqttCallback {
 
         /* Conneting to Broker */
         client.connect(connectOptions);
-        
+
         /* subscribe section */
         client.subscribe(ChannelEnum.ALL_CONNECTED.getChannelEnum());
         client.subscribe(ChannelEnum.FIRST_CONNECTION.getChannelEnum());
         client.setCallback(this);
 
         /* Public message */
-        publish("AllConnected", "Client " + clientID + " is connected. " + "\n");      
+        publish("AllConnected", "Client " + clientID + " is connected. " + "\n");
     }
 
     /**
@@ -117,12 +135,13 @@ public class MQTTClient implements MqttCallback {
         mqttMessage.setQos(qos);
 
         client.publish(topic, mqttMessage);
-    }    
+    }
 
     /**
-     * Subscribe to channel 
+     * Subscribe to channel
+     *
      * @param topic
-     * @throws MqttException 
+     * @throws MqttException
      */
     public void topicSubscribe(String topic) throws MqttException {
         checkConnection();
@@ -131,8 +150,9 @@ public class MQTTClient implements MqttCallback {
 
     /**
      * Unsubscribe to channel
+     *
      * @param topic
-     * @throws MqttException 
+     * @throws MqttException
      */
     public void topicUnsubscribe(String topic) throws MqttException {
         checkConnection();
@@ -145,35 +165,38 @@ public class MQTTClient implements MqttCallback {
     }
 
     @Override
-    public void messageArrived(String topic, MqttMessage mm) throws Exception {
-        System.out.println("TOPIC: " + topic);
-        System.out.println("MESSAGE: " + new String(mm.getPayload()));
-
-//        // Non mi è chiaro cosa vuoi fare    <<<<<<<<<<<<<<<<<<<<<<<<<<<------------------------- 
-//        if (topic.equals(Topics.ACK_LOGIN.getTopic() + "/" + clientID)) {
-//
-//            String message = new String(mm.getPayload());
-//            if (message.equals("ERROR:1")) {
-//                EventManager.getInstance().ackReceided(1);
-//                System.out.println("ERROR:1");
-//            }
-//        }
-//
-//        if (topic.equals("UserConnected")) {
-//            EventManager.getInstance().userConnected(new String(mm.getPayload()));
-//        }
-//        // -----------------------------------
-//
-//        if (topic.equals(subscribeMyChannel)) {
-//            System.out.println("MESSAGGIO PER ME : " + new String(mm.getPayload()));
-//        }
-    }
-
-    @Override
     public void deliveryComplete(IMqttDeliveryToken imdt) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     
+    
+    
+    // --------------------------------------------------------------------------------------------
+//    @Override
+//    public void messageArrived(String topic, MqttMessage mm) throws Exception {
+//        System.out.println("TOPIC: " + topic);
+//        System.out.println("MESSAGE: " + new String(mm.getPayload()));
+//
+////        // Non mi è chiaro cosa vuoi fare    <<<<<<<<<<<<<<<<<<<<<<<<<<<------------------------- 
+////        if (topic.equals(Topics.ACK_LOGIN.getTopic() + "/" + clientID)) {
+////
+////            String message = new String(mm.getPayload());
+////            if (message.equals("ERROR:1")) {
+////                EventManager.getInstance().ackReceided(1);
+////                System.out.println("ERROR:1");
+////            }
+////        }
+////
+////        if (topic.equals("UserConnected")) {
+////            EventManager.getInstance().userConnected(new String(mm.getPayload()));
+////        }
+////        // -----------------------------------
+////
+////        if (topic.equals(subscribeMyChannel)) {
+////            System.out.println("MESSAGGIO PER ME : " + new String(mm.getPayload()));
+////        }
+//    }    
 //    public void tryLogin(String username, String encryptedPassword) throws MqttException {
 //        String topic = Topics.ATTEMPT_LOGIN.getTopic() + "/" + clientID;
 //        String message = username + "," + encryptedPassword;
@@ -181,4 +204,7 @@ public class MQTTClient implements MqttCallback {
 //        topicSubscribe(Topics.ACK_LOGIN.getTopic());
 //        publish(topic, message);
 //    }    
+    // --------------------------------------------------------------------------------------------------
+
+
 }

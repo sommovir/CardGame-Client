@@ -5,20 +5,18 @@
  */
 package it.lule.cardgame.client.gui.panels.login;
 
-import it.lule.cardgame.client.library.call_to.TalkTtoTheServer;
-import it.lule.cardgame.client.library.generic.ConnectionEvent;
-import it.lule.cardgame.client.library.generic.EventManager;
+import it.lule.cardgame.client.library.event.EventManager;
 import it.lule.cardgame.client.library.generic.ManagementPassword;
-import it.lule.cardgame.client.library.mqtt.MQTTClient;
 import javax.swing.JFrame;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import it.lule.cardgame.client.library.inteface.I_EventConnection;
 
 /**
  *
  * @author lele
  */
-public class LoginDialog extends javax.swing.JDialog implements ConnectionEvent {
+public class LoginDialog extends javax.swing.JDialog implements I_EventConnection {
 
-    private TalkTtoTheServer talkTtoTheServer = new TalkTtoTheServer();
     private ManagementPassword managementPassword = new ManagementPassword();
 
     /**
@@ -275,5 +273,10 @@ public class LoginDialog extends javax.swing.JDialog implements ConnectionEvent 
         if (error == 1) {
             this.jLabel_ErrorMessage.setText("Password errata!");
         }
+    }
+
+    @Override
+    public void messageArrived(String topic, MqttMessage mqttMessage) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

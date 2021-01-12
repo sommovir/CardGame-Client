@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.lule.cardgame.client.library;
+package it.lule.cardgame.client.library.prova01;
 
-import it.lule.cardgame.client.library.generic.EventManager;
-import it.lule.cardgame.client.library.generic.Topics;
+import it.lule.cardgame.client.library.event.EventManager;
+import it.lule.cardgame.client.library.enumname.TopicsEnum;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -82,10 +82,10 @@ public class Client_MQTT implements MqttCallback {
     }
 
     public void tryLogin(String username, String encryptedPassword) throws MqttException {
-        String topic = Topics.ATTEMPT_LOGIN.getTopic() + "/" + clientID;
+        String topic = TopicsEnum.ATTEMPT_LOGIN.getTopic() + "/" + clientID;
         String message = username + "," + encryptedPassword;
 
-        topicSubscribe(Topics.ACK_LOGIN.getTopic());
+        topicSubscribe(TopicsEnum.ACK_LOGIN.getTopic());
         publish(topic, message);
     }
 
@@ -138,7 +138,7 @@ public class Client_MQTT implements MqttCallback {
         System.out.println("MESSAGE: " + new String(mm.getPayload()));
 
         // Non mi è chiaro cosa vuoi fare    <<<<<<<<<<<<<<<<<<<<<<<<<<<------------------------- 
-        if (topic.equals(Topics.ACK_LOGIN.getTopic() + "/" + clientID)) {
+        if (topic.equals(TopicsEnum.ACK_LOGIN.getTopic() + "/" + clientID)) {
 
             String message = new String(mm.getPayload());
             if (message.equals("ERROR:1")) {

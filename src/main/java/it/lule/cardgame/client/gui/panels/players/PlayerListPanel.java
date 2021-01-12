@@ -5,15 +5,16 @@
  */
 package it.lule.cardgame.client.gui.panels.players;
 
-import it.lule.cardgame.client.library.generic.ConnectionEvent;
-import it.lule.cardgame.client.library.generic.EventManager;
+import it.lule.cardgame.client.library.event.EventManager;
 import javax.swing.DefaultListModel;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import it.lule.cardgame.client.library.inteface.I_EventConnection;
 
 /**
  *
  * @author Luca
  */
-public class PlayerListPanel extends javax.swing.JPanel implements ConnectionEvent{
+public class PlayerListPanel extends javax.swing.JPanel implements I_EventConnection{
 
     final DefaultListModel model = new DefaultListModel();
     /**
@@ -71,4 +72,10 @@ public class PlayerListPanel extends javax.swing.JPanel implements ConnectionEve
     public void ackReceided(int error) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void messageArrived(String topic, MqttMessage mqttMessage) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

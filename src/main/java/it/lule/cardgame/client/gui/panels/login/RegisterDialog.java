@@ -5,8 +5,6 @@
  */
 package it.lule.cardgame.client.gui.panels.login;
 
-
-import it.lule.cardgame.client.library.call_to.TalkTtoTheServer;
 import it.lule.cardgame.client.library.errorcode.ErrorCode;
 import it.lule.cardgame.client.library.generic.ManagementPassword;
 import javax.swing.JOptionPane;
@@ -16,9 +14,9 @@ import javax.swing.JOptionPane;
  * @author lele
  */
 public class RegisterDialog extends javax.swing.JDialog {
-    private TalkTtoTheServer talkTtoTheServer = new TalkTtoTheServer();
+
     private ManagementPassword managementPassword = new ManagementPassword();
-    
+
     /**
      * Creates new form Register
      */
@@ -143,11 +141,11 @@ public class RegisterDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
-        if (!checkPassword()){
+        if (!checkPassword()) {
             JOptionPane.showMessageDialog(rootPane, ErrorCode.PASSWORD_DO_NOT_MATCH.getCode());
             return;
-        }            
-        
+        }
+
 //        talkTtoTheServer.createRegistration(jTextField1.getText(), jPasswordField1.getPassword().toString());
 //        this.dispose();
     }//GEN-LAST:event_jButtonRegisterActionPerformed
@@ -157,22 +155,22 @@ public class RegisterDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jPasswordField1KeyReleased
 
     private void jPasswordField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField2KeyReleased
-        enableButton();        
+        enableButton();
     }//GEN-LAST:event_jPasswordField2KeyReleased
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        enableButton();  
+        enableButton();
     }//GEN-LAST:event_jTextField1KeyReleased
 
-    private boolean checkPassword(){
+    private boolean checkPassword() {
 
         return false;
     }
-    
-    private void enableButton(){
-                   
+
+    private void enableButton() {
+
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -214,7 +212,7 @@ public class RegisterDialog extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
